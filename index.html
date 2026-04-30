@@ -10,66 +10,125 @@
   <header class="topbar">
     <div>
       <h1>Asset Management</h1>
-      <p>Track company devices, assignments, conditions, and returns.</p>
+      <p>Shared asset tracking with accounts, database storage, and live updates.</p>
     </div>
-    <button id="addAssetBtn">+ Add Asset</button>
+
+    <div id="userArea" class="user-area hidden">
+      <span id="userEmail"></span>
+      <button id="logoutBtn" class="secondary">Logout</button>
+    </div>
   </header>
 
   <main class="container">
-    <section class="stats-grid">
-      <article class="stat-card">
-        <span>Total Assets</span>
-        <strong id="totalAssets">0</strong>
-      </article>
-      <article class="stat-card">
-        <span>Issued</span>
-        <strong id="issuedAssets">0</strong>
-      </article>
-      <article class="stat-card">
-        <span>Available</span>
-        <strong id="availableAssets">0</strong>
-      </article>
-      <article class="stat-card warning">
-        <span>Needs Attention</span>
-        <strong id="attentionAssets">0</strong>
-      </article>
+    <section id="setupNotice" class="notice">
+      <h2>Supabase setup required</h2>
+      <p>
+        Add your Supabase URL and anon key inside <strong>config.js</strong>.
+        Then run the SQL from <strong>database.sql</strong> inside Supabase.
+      </p>
     </section>
 
-    <section class="panel">
-      <div class="panel-header">
-        <h2>Asset Register</h2>
-        <input id="searchInput" type="search" placeholder="Search assets, users, departments..." />
+    <section id="authPanel" class="auth-panel">
+      <div class="auth-card">
+        <h2>Login</h2>
+        <form id="loginForm">
+          <label>
+            Email
+            <input id="loginEmail" type="email" required placeholder="you@example.com" />
+          </label>
+
+          <label>
+            Password
+            <input id="loginPassword" type="password" required placeholder="Your password" />
+          </label>
+
+          <button type="submit">Login</button>
+        </form>
       </div>
 
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Asset ID</th>
-              <th>Device</th>
-              <th>Type</th>
-              <th>Assigned To</th>
-              <th>Department</th>
-              <th>Status</th>
-              <th>Condition</th>
-              <th>Return Date</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="assetTableBody"></tbody>
-        </table>
+      <div class="auth-card">
+        <h2>Create Account</h2>
+        <form id="signupForm">
+          <label>
+            Email
+            <input id="signupEmail" type="email" required placeholder="you@example.com" />
+          </label>
+
+          <label>
+            Password
+            <input id="signupPassword" type="password" required minlength="6" placeholder="Minimum 6 characters" />
+          </label>
+
+          <button type="submit">Create Account</button>
+        </form>
       </div>
+    </section>
+
+    <section id="appPanel" class="hidden">
+      <section class="stats-grid">
+        <article class="stat-card">
+          <span>Total Assets</span>
+          <strong id="totalAssets">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Issued</span>
+          <strong id="issuedAssets">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Available</span>
+          <strong id="availableAssets">0</strong>
+        </article>
+        <article class="stat-card warning">
+          <span>Needs Attention</span>
+          <strong id="attentionAssets">0</strong>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Asset Register</h2>
+            <p id="syncStatus">Connecting...</p>
+          </div>
+
+          <div class="actions">
+            <input id="searchInput" type="search" placeholder="Search assets, users, departments..." />
+            <button id="addAssetBtn">+ Add Asset</button>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Asset ID</th>
+                <th>Device</th>
+                <th>Type</th>
+                <th>Assigned To</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th>Condition</th>
+                <th>Return Date</th>
+                <th>Updated By</th>
+                <th>Updated</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="assetTableBody"></tbody>
+          </table>
+        </div>
+      </section>
     </section>
   </main>
 
   <dialog id="assetModal">
-    <form id="assetForm" method="dialog">
+    <form id="assetForm">
       <div class="modal-header">
         <h2 id="modalTitle">Add Asset</h2>
         <button type="button" id="closeModalBtn" class="icon-btn">×</button>
       </div>
 
-      <input type="hidden" id="editIndex" />
+      <input type="hidden" id="assetDbId" />
 
       <label>
         Asset ID
@@ -142,6 +201,8 @@
     </form>
   </dialog>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
