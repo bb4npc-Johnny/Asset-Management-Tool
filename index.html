@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asset Management Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Asset Management</h1>
+      <p>Track company devices, assignments, conditions, and returns.</p>
+    </div>
+    <button id="addAssetBtn">+ Add Asset</button>
+  </header>
+
+  <main class="container">
+    <section class="stats-grid">
+      <article class="stat-card">
+        <span>Total Assets</span>
+        <strong id="totalAssets">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Issued</span>
+        <strong id="issuedAssets">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Available</span>
+        <strong id="availableAssets">0</strong>
+      </article>
+      <article class="stat-card warning">
+        <span>Needs Attention</span>
+        <strong id="attentionAssets">0</strong>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Asset Register</h2>
+        <input id="searchInput" type="search" placeholder="Search assets, users, departments..." />
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Asset ID</th>
+              <th>Device</th>
+              <th>Type</th>
+              <th>Assigned To</th>
+              <th>Department</th>
+              <th>Status</th>
+              <th>Condition</th>
+              <th>Return Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="assetTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="assetModal">
+    <form id="assetForm" method="dialog">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add Asset</h2>
+        <button type="button" id="closeModalBtn" class="icon-btn">×</button>
+      </div>
+
+      <input type="hidden" id="editIndex" />
+
+      <label>
+        Asset ID
+        <input id="assetId" required placeholder="LAP-001" />
+      </label>
+
+      <label>
+        Device Name
+        <input id="deviceName" required placeholder="Dell Latitude 5450" />
+      </label>
+
+      <label>
+        Type
+        <select id="deviceType">
+          <option>Laptop</option>
+          <option>Desktop</option>
+          <option>Monitor</option>
+          <option>Phone</option>
+          <option>Tablet</option>
+          <option>Accessory</option>
+        </select>
+      </label>
+
+      <label>
+        Assigned To
+        <input id="assignedTo" placeholder="Employee name" />
+      </label>
+
+      <label>
+        Department
+        <input id="department" placeholder="IT, HR, Finance..." />
+      </label>
+
+      <label>
+        Status
+        <select id="status">
+          <option>Available</option>
+          <option>Issued</option>
+          <option>Repair</option>
+          <option>Stored</option>
+          <option>Disposed</option>
+        </select>
+      </label>
+
+      <label>
+        Condition
+        <select id="condition">
+          <option>New</option>
+          <option>Good</option>
+          <option>Minor Scratches</option>
+          <option>Needs Repair</option>
+          <option>Broken</option>
+        </select>
+      </label>
+
+      <label>
+        Return Date
+        <input id="returnDate" type="date" />
+      </label>
+
+      <label>
+        Notes
+        <textarea id="notes" rows="3" placeholder="Accessories, repairs, remarks..."></textarea>
+      </label>
+
+      <div class="modal-actions">
+        <button type="button" id="deleteAssetBtn" class="danger hidden">Delete</button>
+        <button type="submit">Save Asset</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
